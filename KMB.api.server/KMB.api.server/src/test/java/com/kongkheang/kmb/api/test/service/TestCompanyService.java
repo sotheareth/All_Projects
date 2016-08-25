@@ -70,7 +70,7 @@ public class TestCompanyService extends AbstractTestCase {
 	@Rollback(false)
 	public void testUser() {
 		
-		//test
+		//test update 2 change
 		User user = (User) userService.findOne("test1");
 		prettyPrint(user);
 		
