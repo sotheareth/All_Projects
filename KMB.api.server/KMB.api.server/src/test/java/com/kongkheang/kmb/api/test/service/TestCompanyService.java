@@ -69,6 +69,7 @@ public class TestCompanyService extends AbstractTestCase {
 	@Transactional
 	@Rollback(false)
 	public void testUser() {
+		
 		// dara test 2 final test2
 		User user = (User) userService.findOne("test1");
 		prettyPrint(user);
