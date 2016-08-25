@@ -1,0 +1,86 @@
+package com.kongkheang.kmb.api.domain;
+
+import java.util.ArrayList;
+import java.util.Collection;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+
+import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+@Entity(name = "company")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property="id")
+public class Company extends AuditableBaseModel<Long> {
+
+	private static final long serialVersionUID = -6211531463878007466L;
+
+	@Column(name = "companyName")
+	String companyName;
+	
+	@Column(name = "age")
+	Integer age;
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@Fetch(FetchMode.SELECT)
+	@BatchSize(size=5)
+	private Collection<User> users = new ArrayList<>();
+	
+	@PrePersist
+	public void setDefaultValue() {
+		//We set default value in case if the value is not set yet.
+	    if(age == null) {
+	        age = 0;
+	    }
+	}
+	
+	public Company(){}
+	
+	public Company(String companyName){
+		this.companyName = companyName;
+	}
+	
+	public Company(String companyName, Integer age){
+		this.companyName = companyName;
+		this.age = age;
+	}
+
+	public String getCompanyName() {
+		return companyName;
+	}
+
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+	}
+	
+	public Integer getAge() {
+		return age;
+	}
+
+	public void setAge(Integer age) {
+		this.age = age;
+	}
+
+	public Collection<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(Collection<User> users) {
+		this.users = users;
+	}
+
+	@Override
+	public String toString() {
+		return "Company [companyName=" + companyName + ", age=" + age
+				+ ", users=" + users + "]";
+	}
+
+}

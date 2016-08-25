@@ -1,0 +1,5 @@
+package com.kongkheang.kmb.api.controller;
+
+public class CompanyController {
+
+}

@@ -1,0 +1,66 @@
+buildscript {
+	repositories {
+        mavenCentral()
+        maven { url 'http://repo.spring.io/plugins-release' }
+    }
+    dependencies {
+        classpath('org.springframework.boot:spring-boot-gradle-plugin:1.4.0.RELEASE')
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'spring-boot'
+
+repositories {
+    jcenter()
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+ext {
+	logbackVersion = '1.1.7'
+	hikariCPVersion = '2.4.7'
+	dozerVersion = '5.5.1'
+}
+
+dependencies {
+
+	// embedded container
+	compile('org.springframework.boot:spring-boot-starter-web') {
+    	exclude module: 'spring-boot-starter-tomcat'
+    	exclude module: 'org.apache.tomcat.embed'
+	}
+	compile 'org.springframework.boot:spring-boot-starter-undertow'
+
+	
+	// Logging
+    compile "ch.qos.logback:logback-classic:$logbackVersion"
+    compile 'org.slf4j:jcl-over-slf4j:1.7.21'
+    
+	// Spring data    
+	compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+	
+	// HikariCP
+    compile "com.zaxxer:HikariCP:$hikariCPVersion"
+    
+    // Java Bean mapper
+    compile "net.sf.dozer:dozer:$dozerVersion"
+    
+    compile "com.fasterxml.jackson.datatype:jackson-datatype-hibernate5"
+    compile "commons-codec:commons-codec:1.9"
+    
+   
+    
+    // local libs
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    
+	
+	// Spring test
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+bootRepackage {
+    mainClass = 'com.kongkheang.kmb.api.app.Application'
+    excludeDevtools = true
+}

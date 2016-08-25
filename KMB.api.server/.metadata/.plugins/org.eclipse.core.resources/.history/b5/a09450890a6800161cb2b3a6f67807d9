@@ -1,0 +1,21 @@
+package com.kongkheang.kmb.api.service;
+
+import java.util.Collection;
+import java.util.List;
+
+import org.springframework.data.domain.Page;
+
+import com.kongkheang.kmb.api.domain.Company;
+import com.kongkheang.kmb.api.domain.request.PageableRequestMessage;
+
+public interface CompanyService {
+	Company save(Company user);
+	Page<Company> findCompanys(PageableRequestMessage pageable);
+	Company findOne(String companyName);
+	Company findOneByCriteria(Company company);
+	Object findByAge(Integer age);
+	Company findCompany(Company company);
+	Collection<Company> getAll();
+	List<Company> getCompanyByInnerJoin(Company company);
+	public List<Map<String,Object>> getDataListBySQL(final String sql, final Long companyId);
+}

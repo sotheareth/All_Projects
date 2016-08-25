@@ -1,0 +1,14 @@
+package com.kongkheang.kmb.api.service;
+
+import org.springframework.data.domain.Page;
+
+import com.kongkheang.kmb.api.domain.Company;
+import com.kongkheang.kmb.api.domain.request.PageableRequestMessage;
+
+public interface CompanyService {
+	Company save(Company user);
+	Page<Company> findCompanys(PageableRequestMessage pageable);
+	Company findOne(String companyName);
+	Company findOneByCriteria(Company company);
+	List<Company> findByAge(Integer age);
+}

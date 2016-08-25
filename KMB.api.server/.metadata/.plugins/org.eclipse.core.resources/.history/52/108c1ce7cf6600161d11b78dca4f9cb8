@@ -1,0 +1,76 @@
+package com.kongkheang.kmb.api.domain;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.kongkheang.kmb.api.util.Gender;
+
+@Entity(name = "users")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property="id")
+public class User extends AuditableBaseModel<Long> {
+
+	private static final long serialVersionUID = -980324277200694891L;
+
+	@Column(unique = true, nullable = false)
+	private String username;
+
+	@Enumerated(EnumType.STRING)
+	private Gender gender;
+
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "companyId")
+	@NotNull
+	private Company company;
+
+	public User(String username, Gender gender) {
+		this.username = username;
+		this.gender = gender;
+	}
+
+	public User() {
+	}
+
+	public User(String username) {
+		this.username = username;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public Gender getGender() {
+		return gender;
+	}
+
+	public void setGender(Gender gender) {
+		this.gender = gender;
+	}
+
+	public Company getCompany() {
+		return company;
+	}
+
+	public void setCompany(Company company) {
+		this.company = company;
+	}
+
+	@Override
+	public String toString() {
+		return "User [username=" + username + ", gender=" + gender
+				+ ", company=" + company + "]";
+	}
+
+}

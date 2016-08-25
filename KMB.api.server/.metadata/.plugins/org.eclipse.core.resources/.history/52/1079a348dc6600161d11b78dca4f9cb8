@@ -1,0 +1,76 @@
+package com.kongkheang.kmb.api.config;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.PropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+
+/**
+ * Web MVC configuration which allows CORS
+ * @author sayseakleng
+ *
+ */
+@Configuration
+public class WebMvcConfiguration extends WebMvcConfigurerAdapter {
+	
+	@Autowired
+    SessionFactory sessionFactory;
+	
+	/*
+	 * (non-Javadoc)
+	 * @see org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter#addCorsMappings(org.springframework.web.servlet.config.annotation.CorsRegistry)
+	 */
+	@Override
+	public void addCorsMappings(CorsRegistry registry) {
+		
+		 registry.addMapping("/**").allowedOrigins("*");
+	}
+	
+	/**
+	 * Configure ObjectMapper
+	 * @param jacksonObjectMapper
+	 */
+	@Autowired(required = true)
+	public void configeJackson(ObjectMapper jacksonObjectMapper) {
+		jacksonObjectMapper.setSerializationInclusion(Include.NON_NULL);
+		jacksonObjectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+		jacksonObjectMapper.setFilterProvider(createJacksonFilterProvider());
+		
+//		Hibernate5Module module = new Hibernate5Module();
+//        // module.disable(Feature.USE_TRANSIENT_ANNOTATION);
+//        // module.enable(Feature.FORCE_LAZY_LOADING);
+//		jacksonObjectMapper.registerModule(module);
+	}
+	
+	/**
+	 * Internally create JacksonFilterProvider
+	 * @return
+	 */
+	private FilterProvider createJacksonFilterProvider() {
+		Map<String, PropertyFilter> map = new HashMap<>();
+		
+		map.put("SystemInfoFilter", SimpleBeanPropertyFilter.serializeAllExcept(
+				"password",
+				"version",
+				"createdBy",
+				"createdDate",
+				"lastModifiedBy",
+				"lastModifiedDate"
+		));
+		
+		return new SimpleFilterProvider(map);
+	}
+
+}

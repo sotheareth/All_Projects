@@ -1,0 +1,150 @@
+package com.kongkheang.kmb.api.service.impl;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.SQLQuery;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Conjunction;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.ProjectionList;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
+import org.hibernate.sql.JoinType;
+import org.hibernate.transform.DistinctRootEntityResultTransformer;
+import org.hibernate.transform.Transformers;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.kongkheang.kmb.api.dao.CompanyDao;
+import com.kongkheang.kmb.api.domain.Company;
+import com.kongkheang.kmb.api.domain.User;
+import com.kongkheang.kmb.api.domain.request.PageableRequestMessage;
+import com.kongkheang.kmb.api.service.CompanyService;
+import com.kongkheang.kmb.api.util.EntityUtils;
+
+@Service
+@Transactional
+public class CompanyServiceImpl implements CompanyService {
+	@Autowired
+	private CompanyDao companyDao;
+	
+	@Autowired
+	private SessionFactory sessionFactory;
+	
+	@Override
+	public Company save(Company Company) {
+		return companyDao.save(Company);
+	}
+	
+	@Override
+	public Page<Company> findCompanys(PageableRequestMessage pageable) {
+		Pageable param = pageable.generatePageable();
+		return companyDao.findAll(param);
+	}
+
+	@Override
+	public Company findOne(String companyName) {
+		Example<Company> example = Example.of(new Company(companyName));
+		List<Company> findAll = companyDao.findAll(example);
+		EntityUtils.initializeLazyPropertiesInArray(findAll);
+		return findAll.get(0);
+	}
+
+	@Override
+	public Company findOneByCriteria(Company company) {
+		Session session = sessionFactory.getCurrentSession();
+		Company result = (Company) session.createCriteria(Company.class)
+			.add(Restrictions.like("companyName", company.getCompanyName()))
+			.uniqueResult();
+		
+		return result;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public Object findByAge(Integer age) {
+		Session session = sessionFactory.getCurrentSession();
+		List<Company> result = new ArrayList<>();
+		return session.createCriteria(Company.class)
+				.setProjection(Projections.projectionList()
+					.add(Projections.avg("age"))
+					)
+				.list();
+		
+	}
+
+	@Override
+	public Company findCompany(Company company) {
+		Session session = sessionFactory.getCurrentSession();
+		
+		Criteria criteria = session.createCriteria(Company.class, "com");
+		Criterion  lessAge =  Restrictions.le("age", 50);
+		Criterion  name = Restrictions.like("companyName", company.getCompanyName(), MatchMode.ANYWHERE);
+		//LogicalExpression compound = Restrictions.or(lessAge, name);
+		Conjunction  disjunction = Restrictions.conjunction();
+		disjunction
+			.add(lessAge)
+			.add(name);
+		criteria.add(disjunction);
+		return (Company) criteria.uniqueResult();		
+	}
+
+	@Override
+	public Collection<Company> getAll() {
+		return companyDao.findAll();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Company> getCompanyByInnerJoin(Company company) {
+		Session session = sessionFactory.getCurrentSession();
+		Criteria criteria = session.createCriteria(Company.class, "com");
+		Criteria userCriteria = criteria.createAlias("com.users", "users", JoinType.LEFT_OUTER_JOIN, Restrictions.like("users.username", "test1", MatchMode.ANYWHERE));
+		userCriteria.setResultTransformer(Transformers.aliasToBean(User.class));
+		userCriteria.add(Restrictions.like("com.companyName", "Dara"));
+		
+		ProjectionList projects = Projections.projectionList();
+		projects.add(Projections.distinct(Projections.property("com.id").as("id")));
+		projects.add(Projections.property("com.companyName").as("companyName"));
+		projects.add(Projections.property("users.id").as("users.id"));
+		projects.add(Projections.property("users.username").as("users.username"));
+		
+		criteria.setProjection(projects);
+		
+		criteria.setResultTransformer(Transformers.aliasToBean(Company.class));
+		return (List<Company>)criteria.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Company> getDataListBySQL(Long companyId){
+		Session session = sessionFactory.getCurrentSession();
+	    String queryString = "SELECT c.id, c.company_name, c.age FROM Company c, User u WHERE c.id = :companyId";
+	    
+	    //please do not use @formula annotation when use native in pojo
+	    //hibernate cannot understand that; that's going to produce NullPointException 
+	    //at org.hibernate.loader.DefaultEntityAliases.intern(DefaultEntityAliases.java:157)
+	    //http://stackoverflow.com/questions/2005531/hibernate-computed-property-and-sql-queries
+	    
+		SQLQuery query = session.createSQLQuery(queryString);
+		query.addEntity("c", Company.class);
+		query.addJoin("u", "u.company");
+		query.setParameter("companyId", companyId);
+		List<Object> collection = query.list();
+		query.setResultTransformer(new DistinctRootEntityResultTransformer())
+		for(Object item : collection){
+			System.out.println(item);
+		}
+	    return query.list();
+	}
+	
+}

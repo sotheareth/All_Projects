@@ -1,0 +1,8 @@
+1. Must use transactional on each test method (to create session)
+2. Left Join must use org.hibernate.sql.JoinType.LEFT_OUTER_JOIN (not use javax.persistence.data package)
+3. withClause condition (hibernate cannot resolve nested property for us)
+	- eq("users.company", "com.id") hibernate translate use primary key users.company_id = com.id for us by default
+	- when createCriteria between two tables is inner join by default (on tableA.primaryId = tableB.foreignId)
+	- eq("users.company.id", 1L) 
+4. 
+http://stackoverflow.com/questions/19928568/hibernate-best-practice-to-pull-all-lazy-collections
