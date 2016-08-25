@@ -68,9 +68,12 @@ public class TestCompanyService extends AbstractTestCase {
 	@Test
 	@Transactional
 	@Rollback(false)
-	public void testUser(){
+	public void testUser() {
+		
+		//test
 		User user = (User) userService.findOne("test1");
 		prettyPrint(user);
+		
 	}
 	
 	@Test
