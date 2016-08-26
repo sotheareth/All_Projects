@@ -5,7 +5,6 @@
 
 - [x] Create criteria with clause statement (the result of criteria is better than SQL Query)
 - [x] Create SQL Query (The result of SQL Query can be duplicate)
-- [x] 
 
 
 ```
@@ -78,8 +77,8 @@ return findAll.get(0);
 } ]
 
 - if you apply projection list to criteria above class service code then
-- the result will be List<Object> and you need to convert or Transform
-- by your custom code
+  the result will be List of object and you need to convert or Transform
+  by your custom code
 
 
 -[x] Create SQL Query (The result of SQL Query can be duplicate)
