@@ -17,6 +17,7 @@ import com.kongkheang.kmb.api.domain.User;
 import com.kongkheang.kmb.api.service.CompanyService;
 import com.kongkheang.kmb.api.service.UserService;
 import com.kongkheang.kmb.api.test.AbstractTestCase;
+import com.kongkheang.kmb.api.util.EntityUtils;
 import com.kongkheang.kmb.api.util.Gender;
 
 public class TestCompanyService extends AbstractTestCase {
@@ -80,7 +81,7 @@ public class TestCompanyService extends AbstractTestCase {
 	@Transactional
 	public void testFindCompanyByInnerJoin() {
 		List<Company> company = companyService.getCompanyByInnerJoin(new Company("Dara"));
-		Hibernate.initialize(company);
+		EntityUtils.initializeLazyPropertiesInArray(company);
 		prettyPrint(company);
 		
 //		Object companys = companyService.findByAge(10);

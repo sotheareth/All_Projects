@@ -1,0 +1,3 @@
+commit_dialog_history_messages=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<messages>\r\n<message>Merge branch &apos;master&apos; of https\://github.com/sotheareth/All_Projects.git&\#x0A;&\#x0A;Conflicts\:&\#x0A;&\#x09;KMB.api.server/KMB.api.server/src/test/java/com/kongkheang/kmb/api/test/service/TestCompanyService.java&\#x0A;</message>\r\n<message>test merge change3</message>\r\n<message>merge change</message>\r\n<message>chage</message>\r\n<message>second change</message>\r\n</messages>
+eclipse.preferences.version=1
+sync_view_last_selected_model=org.eclipse.jdt.ui.modelProvider

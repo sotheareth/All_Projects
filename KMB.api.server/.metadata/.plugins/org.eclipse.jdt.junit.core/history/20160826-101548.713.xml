@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="TestCompanyService.testFindCompanyByInnerJoin" project="KMB.api.server" tests="1" started="1" failures="0" errors="0" ignored="0">
+  <testcase name="testFindCompanyByInnerJoin" classname="com.kongkheang.kmb.api.test.service.TestCompanyService" time="0.415"/>
+</testrun>

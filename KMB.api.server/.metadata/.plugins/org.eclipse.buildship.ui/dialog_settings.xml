@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.buildship.ui.wizard.project.import">
-		<item value="D:\backup_old\Projects\KMB.api.server\KMB.api.server" key="project_location"/>
+		<item value="D:\backup_old\Projects\project_git\KMB.api.server\KMB.api.server" key="project_location"/>
 	</section>
 </section>

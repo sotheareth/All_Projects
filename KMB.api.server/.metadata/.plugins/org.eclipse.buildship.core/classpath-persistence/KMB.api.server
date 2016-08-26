@@ -82,5 +82,5 @@
 <classpathentry kind="lib" path="C:/Users/sotheareth.ham/.gradle/caches/modules-2/files-2.1/xml-apis/xml-apis/1.4.01/3789d9fada2d3d458c4ba2de349d48780f381ee3/xml-apis-1.4.01.jar" sourcepath="C:/Users/sotheareth.ham/.gradle/caches/modules-2/files-2.1/xml-apis/xml-apis/1.4.01/5502da0c4c0a7916a604356ef19394ccfa30cd4b/xml-apis-1.4.01-sources.jar"/>
 <classpathentry kind="lib" path="C:/Users/sotheareth.ham/.gradle/caches/modules-2/files-2.1/net.minidev/accessors-smart/1.1/a527213f2fea112a04c9bdf0ec0264e34104cd08/accessors-smart-1.1.jar" sourcepath="C:/Users/sotheareth.ham/.gradle/caches/modules-2/files-2.1/net.minidev/accessors-smart/1.1/b5c478091ad2bfd497758094b00936543393415b/accessors-smart-1.1-sources.jar"/>
 <classpathentry kind="lib" path="C:/Users/sotheareth.ham/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm/5.0.3/dcc2193db20e19e1feca8b1240dbbc4e190824fa/asm-5.0.3.jar" sourcepath="C:/Users/sotheareth.ham/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm/5.0.3/f0f24f6666c1a15c7e202e91610476bd4ce59368/asm-5.0.3-sources.jar"/>
-<classpathentry kind="lib" path="D:/backup_old/Projects/KMB.api.server/KMB.api.server/libs/sqljdbc4.jar"/>
+<classpathentry kind="lib" path="D:/backup_old/Projects/project_git/KMB.api.server/KMB.api.server/libs/sqljdbc4.jar"/>
 </classpath>

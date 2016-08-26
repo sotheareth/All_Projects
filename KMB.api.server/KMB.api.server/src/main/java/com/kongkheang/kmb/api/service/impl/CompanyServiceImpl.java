@@ -136,7 +136,7 @@ public class CompanyServiceImpl implements CompanyService {
 	@Override
 	public List<Company> getDataListBySQL(Long companyId){
 		Session session = sessionFactory.getCurrentSession();
-	    String queryString = "SELECT c.id, c.company_name, c.age, c.created_by, c.created_date, u.id, u.username, u.gender, u.company_id FROM Company c join Users u"
+	    String queryString = "SELECT {c.*}, {u.*} FROM Company c join Users u"
 	    		+ " on u.company_id = c.id WHERE c.id = :companyId";
 	    
 	    //please do not use @formula annotation when use native in pojo
