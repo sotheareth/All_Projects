@@ -82,7 +82,8 @@ return findAll.get(0);
 - by your custom code
 
 
-- [x] Create SQL Query (The result of SQL Query can be duplicate)
+-[x] Create SQL Query (The result of SQL Query can be duplicate)
+
 ```
 	@SuppressWarnings("unchecked")
 	@Override
@@ -115,8 +116,10 @@ return findAll.get(0);
 		
 	}
 ```
+
 - the result below
-- [ [ {
+```
+[ [ {
   "id" : 1,
   "companyName" : "Dara",
   "age" : 10,
@@ -151,6 +154,6 @@ return findAll.get(0);
   "username" : "test1",
   "gender" : "M"
 } ] ]
+```
 
-
-This site was built using [GitHub Pages](https://pages.github.com/).
+- This site was built using [GitHub Pages](https://pages.github.com/).
