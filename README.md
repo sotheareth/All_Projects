@@ -61,6 +61,7 @@ return findAll.get(0);
 	}
 ```
 - the result
+```
 [ {
   "id" : 1,
   "companyName" : "Dara",
@@ -75,6 +76,7 @@ return findAll.get(0);
     "gender" : "M"
   } ]
 } ]
+```
 
 - if you apply projection list to criteria above class service code then
   the result will be List of object and you need to convert or Transform
