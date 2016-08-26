@@ -53,10 +53,10 @@ return findAll.get(0);
 ```
 - the above result if we run unit test
 ```
-  @Transactional
+  	@Transactional
 	public void testFindCompanyByInnerJoin() {
 		List<Company> company = companyService.getCompanyByInnerJoin(new Company("Dara"));
-		Hibernate.initialize(company);
+		EntityUtils.initializeLazyPropertiesInArray(company);
 		prettyPrint(company);
 		
 	}
@@ -66,7 +66,15 @@ return findAll.get(0);
   "id" : 1,
   "companyName" : "Dara",
   "age" : 10,
-  "users" : null
+  "users" : [ {
+    "id" : 1,
+    "username" : "test2",
+    "gender" : "F"
+  }, {
+    "id" : 2,
+    "username" : "test1",
+    "gender" : "M"
+  } ]
 } ]
 
 - George Washington
